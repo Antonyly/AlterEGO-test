@@ -1,10 +1,42 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { App } from 'components/App';
-import './index.css';
+import React, { Suspense } from "react";
+// import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
+import {BrowserRouter} from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { PersistGate } from "redux-persist/integration/react";
+import { store, persistor } from 'store';
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+import App from './App';
+import './index.css';
+import './firebase';
+
+import "./18n"; 
+
+// ReactDOM.render(
+//   <React.StrictMode>
+//     <BrowserRouter>
+//       <Suspense fallback={<p>...Loading page</p>}>
+//         <Provider store={store}>
+//           <PersistGate loading={null} persistor={persistor}>
+//             <App />
+//           </PersistGate>
+//         </Provider>
+//       </Suspense>
+//     </BrowserRouter>
+//   </React.StrictMode>,
+//   document.getElementById('root')
+// );
+
+const root = createRoot(document.getElementById('root'));
+root.render(
+  <BrowserRouter>
+       <Suspense fallback={<p>...Loading page</p>}>
+         <Provider store={store}>
+           <PersistGate loading={null} persistor={persistor}>
+             <App />
+           </PersistGate>
+         </Provider>
+       </Suspense>
+     </BrowserRouter>
 );
+
